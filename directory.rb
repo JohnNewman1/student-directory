@@ -1,22 +1,17 @@
-=begin
-We've been using the chomp() method to get rid of the last return character. Find another method among those provided by the
-String class that could be used for the same purpose (although it will require passing some arguments).
-=end
-
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
   # get the first name
-  name = gets.chop
+  name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chop
+    name = gets.chomp
   end
   # return the array of students
   students
@@ -32,10 +27,15 @@ def print(students)
 end
 
 def print_footer(names)
+
   puts "Overall, we have #{names.count} great students"
 end
 
 students = input_students
-print_header
-print(students)
-print_footer(students)
+if students == []
+  puts "No List made"
+else
+  print_header
+  print(students)
+  print_footer(students)
+end
