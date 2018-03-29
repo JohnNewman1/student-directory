@@ -1,6 +1,6 @@
 =begin
-Right now if we have only one student, the user will see a message "Now we have 1 students", whereas it should be "Now we have 1 student".
-How can you fix it so that it used singular form when appropriate and plural form otherwise?
+We've been using the chomp() method to get rid of the last return character. Find another method among those provided by the
+String class that could be used for the same purpose (although it will require passing some arguments).
 =end
 
 def input_students
@@ -9,19 +9,14 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets.chop
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: :november}
-
-    if students.count == 1
-      puts "Now we have #{students.count} student"
-    else
-      puts "Now we have #{students.count} students"
-    end
+    puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp
+    name = gets.chop
   end
   # return the array of students
   students
@@ -37,11 +32,7 @@ def print(students)
 end
 
 def print_footer(names)
-  if names.count == 1
-    puts "Overall, we have #{names.count} great student"
-  else
-    puts "Overall, we have #{names.count} great students"
-  end
+  puts "Overall, we have #{names.count} great students"
 end
 
 students = input_students
