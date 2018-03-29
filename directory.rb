@@ -1,8 +1,7 @@
 =begin
-In the input_students method the cohort value is hard-coded.
-How can you ask for both the name and the cohort? What if one of the values is empty?
-Can you supply a default value? The input will be given to you as a string?
-How will you convert it to a symbol? What if the user makes a typo?
+Once you complete the previous exercise, change the way the users are displayed: print them grouped by cohorts.
+ To do this, you'll need to get a list of all existing cohorts (the map() method may be useful but it's not the only option),
+ iterate over it and only print the students from that cohort.
 =end
 
 
@@ -45,6 +44,8 @@ def print_header
   puts "-------------"
 end
 def print(students)
+  students = students.sort_by {|hash| hash[:cohort]}
+
   students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
