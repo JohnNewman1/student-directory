@@ -1,9 +1,7 @@
 =begin
-Once you complete the previous exercise, change the way the users are displayed: print them grouped by cohorts.
- To do this, you'll need to get a list of all existing cohorts (the map() method may be useful but it's not the only option),
- iterate over it and only print the students from that cohort.
+Right now if we have only one student, the user will see a message "Now we have 1 students", whereas it should be "Now we have 1 student".
+How can you fix it so that it used singular form when appropriate and plural form otherwise?
 =end
-
 
 def input_students
   puts "Please enter the names of the students"
@@ -12,29 +10,18 @@ def input_students
   students = []
   # get the first name
   name = gets.chomp
-  cohort = gets.chomp
   # while the name is not empty, repeat this code
-  while !name.empty? || !cohort.empty? do
+  while !name.empty? do
     # add the student hash to the array
-    if name.empty?
-      name = "NoNameGiven"
-    end
-    if cohort.empty?
-      cohort = "NoDateGiven"
-    else #checking for typos
-      until ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July',
-       'August', 'September', 'October', 'November','December'].include?(cohort.capitalize)
-       puts "you made a typo"
-       cohort = gets.chomp
-      end
-    end
+    students << {name: name, cohort: :november}
 
-
-    students << {name: name, cohort: cohort.to_sym}
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     # get another name from the user
     name = gets.chomp
-    cohort = gets.chomp
   end
   # return the array of students
   students
@@ -44,15 +31,17 @@ def print_header
   puts "-------------"
 end
 def print(students)
-  students = students.sort_by {|hash| hash[:cohort]}
-
   students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  if names.count == 1
+    puts "Overall, we have #{names.count} great student"
+  else
+    puts "Overall, we have #{names.count} great students"
+  end
 end
 
 students = input_students
