@@ -81,14 +81,14 @@ def save_students
   filename = STDIN.gets.chomp
   if File.exists?(filename)
     # open the file for writing
-    file = File.open(filename, "w")
+    File.open(filename, "w") do |file|
     # iterate over the array of students
-    @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      @students.each do |student|
+        student_data = [student[:name], student[:cohort]]
+        csv_line = student_data.join(",")
+        file.puts csv_line
+      end
     end
-    file.close
   else
     puts "File name does not exist"
   end
@@ -96,12 +96,12 @@ end
 # option 4 loading students into list from students.csv
 def load_students(filename = "students.csv")
   if File.exists?(filename)
-    file = File.open(filename, "r")
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_to_students(name, cohort)
+    File.open(filename, "r") do |file|
+      file.readlines.each do |line|
+        name, cohort = line.chomp.split(',')
+        add_to_students(name, cohort)
+      end
     end
-    file.close
   else
     puts "File name does not exist"
   end
