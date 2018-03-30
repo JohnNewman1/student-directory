@@ -1,3 +1,4 @@
+require 'csv'
 
 # inititiates the program and shows menu
 def interactive_menu
@@ -81,12 +82,10 @@ def save_students
   filename = STDIN.gets.chomp
   if File.exists?(filename)
     # open the file for writing
-    File.open(filename, "w") do |file|
+    CSV.open(filename, "w") do |file|
     # iterate over the array of students
       @students.each do |student|
-        student_data = [student[:name], student[:cohort]]
-        csv_line = student_data.join(",")
-        file.puts csv_line
+        file << [student[:name], student[:cohort]]
       end
     end
   else
@@ -96,9 +95,9 @@ end
 # option 4 loading students into list from students.csv
 def load_students(filename = "students.csv")
   if File.exists?(filename)
-    File.open(filename, "r") do |file|
-      file.readlines.each do |line|
-        name, cohort = line.chomp.split(',')
+    CSV.open(filename, "r") do |file|
+      CSV.foreach(filename) do |row|
+        name, cohort = row
         add_to_students(name, cohort)
       end
     end
