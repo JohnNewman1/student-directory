@@ -37,6 +37,10 @@ def input_students
   puts "To finish, just hit return twice"
   # get the first name
   name = STDIN.gets.chomp
+  while_name_empty(name)
+end
+
+def while_name_empty(name)
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
@@ -93,6 +97,10 @@ end
 def try_load_students
   @students = []
   filename = ARGV.first # first argument from the command line
+  filename_process(filename)
+end
+
+def filename_process(filename = "students.csv")
   if filename.nil?
     load_students
     puts "Loaded #{@students.count} from students.csv"# get out of the method if it isn't given
