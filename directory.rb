@@ -10,8 +10,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to file"
+  puts "4. Load the list from file"
   puts "9. Exit"
 end
 # process of what selection is made
@@ -24,7 +24,9 @@ def process(selection)
     when "3"
       save_students
     when "4"
-      load_students
+      puts "Enter file name"
+      filename = STDIN.gets.chomp
+      load_students(filename)
     when "9"
       puts "Goodbye"
       exit
@@ -75,24 +77,34 @@ def print_footer
 end
 # selection 3 method to save students to students.csv from list
 def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  puts "Enter file name"
+  filename = STDIN.gets.chomp
+  if File.exists?(filename)
+    # open the file for writing
+    file = File.open(filename, "w")
+    # iterate over the array of students
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
+    file.close
+  else
+    puts "File name does not exist"
   end
-  file.close
 end
 # option 4 loading students into list from students.csv
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    add_to_students(name, cohort)
+  if File.exists?(filename)
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      add_to_students(name, cohort)
+    end
+    file.close
+  else
+    puts "File name does not exist"
   end
-  file.close
 end
 
 #load in command line the file
