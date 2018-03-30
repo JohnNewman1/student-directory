@@ -26,10 +26,12 @@ def process(selection)
     when "4"
       load_students
     when "9"
+      puts "Goodbye"
       exit
     else
       puts "I don't know what you mean, try again"
   end
+  puts "Selection #{selection} was successful"
 end
 # selection 1 method to add students
 def input_students
@@ -100,7 +102,7 @@ def try_load_students
   filename_process(filename)
 end
 
-def filename_process(filename = "students.csv")
+def filename_process(filename)
   if filename.nil?
     load_students
     puts "Loaded #{@students.count} from students.csv"# get out of the method if it isn't given
